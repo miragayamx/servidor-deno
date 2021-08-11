@@ -6,14 +6,13 @@ import { createApp } from "https://deno.land/x/servest@v1.3.1/mod.ts";
 
 const app = createApp();
 
-const colores = [];
+const colores: any[] = [];
 
 app.handle('/', async (req) => {
-    //const cleanUrl = req.url.replace(/\//g, '');
-    //const frase = new URLSearchParams(cleanUrl).get('frase');
     if(req.method === 'POST'){
-        console.log(req.bodyUsed);
-        console.log(req.body);
+        const params = new URLSearchParams(new TextDecoder().decode(await Deno.readAll(req.body)));;
+        const dato = params.get("color");
+        colores.push(dato);
     }
     await req.respond({
         status: 200,
@@ -27,15 +26,15 @@ app.handle('/', async (req) => {
                     <title>Colores</title>
                 </head>
                 <body>
-                    <form action="http://localhost:8080/api/productos/guardar" method="POST" enctype="application/x-www-form-urlencoded">
-                        <div class="form-group mb-3">
-                            <label for="color">Color</label>
-                            <input class="form-control" id="color" type="text" name="color" required="true" />
+                    <form action="/" method="POST">
+                        <div className="form-group mb-3">
+                            <label htmlFor="color">Color</label>
+                            <input className="form-control" id= "color" type="text" name="color" />
                         </div>
                         <button type="submit">Ingresar</button>
                     </form>
                     <ul>
-                        {colores.map((color) => <li style={color}>{color}</li>)}
+                        {colores.map((color) => <li >{color}</li>)}
                     </ul>
                 </body>
             </html>
