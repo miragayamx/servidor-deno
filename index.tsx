@@ -34,7 +34,7 @@ app.handle('/', async (req) => {
                         <button type="submit">Ingresar</button>
                     </form>
                     <ul>
-                        {colores.map((color) => <li >{color}</li>)}
+                        {colores.map((color) => <li style={{color: `${color}`}}>{color}</li>)}
                     </ul>
                 </body>
             </html>
